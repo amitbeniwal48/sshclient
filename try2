@@ -1,0 +1,47 @@
+import paramiko
+import os
+import sys
+
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+pswd = input('Password:')
+ssh.connect('1.1.1.1', port=22, username='xyz', password= pswd)
+channel = ssh.invoke_shell()
+
+channel_data = str()
+host = str()
+srcfile = str()
+
+while True:
+    if channel.recv_ready():
+        channel_data += channel.recv(9999)
+        print (channel_data)
+    else:
+        continue
+
+    if channel_data.endswith('ecgw01.jnb.za.e.cas.ericsson.se > '):
+        channel.send('ssh host')
+        channel.send('\n')
+    elif channel_data.endswith('Password: '):
+        channel.send('ABC')
+        channel.send('\n')
+    elif channel_data.endswith('Do you accept the access conditions (yes/no) [no]: '):
+        channel.send('yes')
+        channel.send('\n')
+    elif channel_data.endswith('host > '):
+        channel.send('telnet 10.32.60.194')
+        channel.send('\n')
+    elif channel_data.endswith('login: '):
+        channel.send('ecfghkp')
+        channel.send('\n')
+    elif channel_data.endswith('Password: '):
+        channel.send('3ric$123')
+        channel.send('\n')
+    elif channel_data.endswith('ECFGHKP@NICUAS01> '):
+        channel.send('\n')
+    
+error: 
+Traceback (most recent call last):
+  File "C:/Users/EAMTKUL/Desktop/PYTHON PROGRAMS/sshosstry2.py", line 17, in <module>
+    channel_data += channel.recv(9999)
+TypeError: must be str, not bytes
