@@ -19,7 +19,7 @@ while True:
     else:
         continue
 
-    if channel_data.endswith('ecgw01.jnb.za.e.cas.ericsson.se > '):
+    if channel_data.endswith('ecgw01.jnb.za.e.cas.se > '):
         channel.send('ssh host')
         channel.send('\n')
     elif channel_data.endswith('Password: '):
